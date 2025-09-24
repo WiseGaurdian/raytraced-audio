@@ -48,6 +48,7 @@ func _setup_audio_buses() -> void:
 	_clean_up_audio_buses()
 
 	# Reverb
+	#region
 	var i: int = AudioServer.bus_count
 	AudioServer.add_bus()
 	AudioServer.set_bus_name(i, ProjectSettings.get_setting("raytraced_audio/reverb_bus", &"RaytracedReverb"))
@@ -56,8 +57,10 @@ func _setup_audio_buses() -> void:
 	reverb.hipass = 1.0
 	reverb.resource_name = "reverb"
 	AudioServer.add_bus_effect(i, reverb)
+	#endregion
 
 	# Ambient
+	#region
 	i = AudioServer.bus_count
 	AudioServer.add_bus()
 	AudioServer.set_bus_name(i, ProjectSettings.get_setting("raytraced_audio/ambient_bus", &"RaytracedAmbient"))
@@ -65,6 +68,7 @@ func _setup_audio_buses() -> void:
 	var panner: AudioEffectPanner = AudioEffectPanner.new()
 	panner.resource_name = "pan"
 	AudioServer.add_bus_effect(i, panner)
+	#endregion
 
 	# There's a bug in Godot that makes it so the ambient bus doesnt show properly in the editor
 	# This is "fixable" by adding a temporary bus afterwards and deleting it immediately because ofc.
